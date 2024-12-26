@@ -55,9 +55,9 @@ WHERE duration_min = 0;
 DELETE FROM spotify
 WHERE duration_min = 0;
 
-----------------------------------
--- Stakeholder Questions - Basic
-----------------------------------
+---------
+-- Easy
+---------
 
 --Retrieve the names of all tracks that have more than 1 billion streams.
 
@@ -92,9 +92,9 @@ SELECT
 FROM spotify
 GROUP BY artist;
 
-----------------------------------
--- Stakeholder Questions - Mediocre
-----------------------------------
+----------
+-- Medium
+----------
 
 -- Calculate the average danceability of tracks in each album.
 
@@ -151,17 +151,6 @@ GROUP BY track
 WHERE 
 	streamed_on_spotify > streamed_on_youtube AND streamed_on_youtube <> 0
 
--- Using Having
-SELECT 
-    track,
-    COALESCE(SUM(CASE WHEN most_played_on = 'Youtube' THEN stream END), 0) AS streamed_on_youtube,
-    COALESCE(SUM(CASE WHEN most_played_on = 'Spotify' THEN stream END), 0) AS streamed_on_spotify
-FROM spotify
-GROUP BY track
-HAVING 
-    SUM(CASE WHEN most_played_on = 'Spotify' THEN stream END) > SUM(CASE WHEN most_played_on = 'Youtube' THEN stream END)
-    AND SUM(CASE WHEN most_played_on = 'Youtube' THEN stream END) <> 0;
-
 -- Write a query to find tracks where the liveness score is above the average.
 
 SELECT 
@@ -170,15 +159,11 @@ SELECT
 FROM spotify 
 WHERE liveness > (SELECT AVG(liveness) FROM spotify)
 
-----------------------------------
--- Stakeholder Questions - Advanced 
-----------------------------------
+-----------
+-- Advanced 
+-----------
 
 -- Find the top 3 most-viewed tracks for each artist using window functions.
-
--- Get the required columns to display - track, artist views  
--- Get the most viewed artists - use DENSE_RANK
--- Retrieve the top 3 most viewed - use Nested Queries 
 
 SELECT * 
 FROM(
@@ -221,7 +206,7 @@ SELECT
 FROM energy
 ORDER BY EnergyDifference DESC;
 
--- Query Optimization uisng Index 
+-- Query Optimization using Index 
 
 EXPLAIN ANALYZE 
 SELECT
