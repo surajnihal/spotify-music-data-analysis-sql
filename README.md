@@ -83,14 +83,14 @@ Advanced optimizations included:
    ```sql
    SELECT * 
    FROM(
-	SELECT
+       SELECT
 	  artist,
 	  track,
 	  views,
 	  DENSE_RANK() OVER (PARTITION BY artist ORDER BY views DESC) as views_rank
         FROM spotify
-      ) as ranked
-      WHERE views_rank <= 3;
+   ) as ranked
+   WHERE views_rank <= 3;
 2. Calculate the difference between the highest and lowest `energy` values for tracks in each album using a `WITH` clause:
    ```sql
    WITH energy_stats AS (
